@@ -6,7 +6,7 @@
 #    By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/13 15:52:21 by jmilson-          #+#    #+#              #
-#    Updated: 2021/12/23 14:00:05 by jmilson-         ###   ########.fr        #
+#    Updated: 2022/01/05 13:33:54 by jmilson-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ FLAGS = -g -Wall -Wextra -Werror
 CC = gcc
 
 SRCS = main.c \
-	pipex.c
+	pipex.c \
+	pipex_utils.c \
+	pipex_utils_2.c \
+	pipex_utils_3.c
 
 OBJS = $(SRCS:%.c=%.o)
 
@@ -37,4 +40,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY all clean fclean re
+.PHONY: all clean fclean re
