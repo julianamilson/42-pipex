@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:11:46 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/05 13:37:27 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:36:33 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define PATH "/usr/local/sbin/::/usr/local/bin/:\
-	/usr/sbin/:/usr/bin/:/sbin:/bin/"
+/usr/sbin/:/usr/bin/:/sbin/:/bin/"
 
 typedef struct s_pipex
 {
@@ -29,9 +32,13 @@ typedef struct s_pipex
 	char	*scmd;
 	char	*fmod;
 	char	*smod;
-} t_pipex;
+}	t_pipex;
 
 char	*what_cmd(char *cmd);
+void	second_cmd(t_pipex *pipet, int *fd);
+void	first_cmd(t_pipex *pipet, int *fd);
+void	pipex(t_pipex *pipet);
+void	define_variables(t_pipex *pipet, char **argv, char **env);
 
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *str, size_t n);
