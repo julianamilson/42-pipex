@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/10 16:41:00 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:06:49 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	second_cmd(t_pipex *pipet, int *fd)
 
 	matrix = ft_split(pipet->scmd, ' ');
 	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	dup2(fd[1], STDIN_FILENO);
+	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
-	close(fd[0]);
+	close(fd[1]);
 	pipet->smod = what_cmd(matrix[0]);
 	execve(pipet->smod, matrix, pipet->env);
 }
@@ -34,8 +34,8 @@ void	first_cmd(t_pipex *pipet, int *fd)
 	matrix = ft_split(pipet->fcmd, ' ');
 	infile = open(pipet->input, O_RDONLY);
 	dup2(infile, STDIN_FILENO);
-	dup2(fd[0], STDOUT_FILENO);
-	close(fd[1]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
 	pipet->fmod = what_cmd(matrix[0]);
 	execve(pipet->fmod, matrix, pipet->env);
 }
