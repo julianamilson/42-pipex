@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:11:46 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/10 16:19:48 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:11:30 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ typedef struct s_pipex
 	char	*scmd;
 	char	*fmod;
 	char	*smod;
+	int		result;
+	int		infile;
 }	t_pipex;
 
 char	*what_cmd(char *cmd);
 void	second_cmd(t_pipex *pipet, int *fd);
 void	first_cmd(t_pipex *pipet, int *fd);
 void	pipex(t_pipex *pipet);
+char	*original_cmd(char *cmd);
+char	*treating_cmd(char *cmd);
 
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *str, size_t n);

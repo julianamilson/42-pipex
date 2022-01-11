@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/10 19:06:49 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:09:04 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,63 @@
 
 void	second_cmd(t_pipex *pipet, int *fd)
 {
-	int	outfile;
+	int		outfile;
 	char	**matrix;
+	int		i;
 
+	treating_cmd(pipet->scmd);
 	matrix = ft_split(pipet->scmd, ' ');
-	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	i = 1;
+	while (matrix[i])
+	{
+		original_cmd(matrix[i]);
+		i++;
+	}
+	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 01411);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);
+	if (pipet->result == 1)
+	{
+		write(2, "This file doesn't exists.\n", 27);
+		exit(1);
+	}
 	pipet->smod = what_cmd(matrix[0]);
-	execve(pipet->smod, matrix, pipet->env);
+	if (pipet->smod == NULL)
+	{
+		write(2, "Error\nCommand doesn't exists.\n", 31);
+		pipet->result = 127;
+		exit(127);
+	}
+	else
+		execve(pipet->smod, matrix, pipet->env);
 }
 
 void	first_cmd(t_pipex *pipet, int *fd)
 {
-	int		infile;
 	char	**matrix;
 
+	treating_cmd(pipet->fcmd);
 	matrix = ft_split(pipet->fcmd, ' ');
-	infile = open(pipet->input, O_RDONLY);
-	dup2(infile, STDIN_FILENO);
+	original_cmd(pipet->fcmd);
+	if (pipet->infile < 0)
+	{
+		pipet->result = 1;
+		write(2, "This file doesn't exists.\n", 27);
+		exit(5);
+	}
+	dup2(pipet->infile, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	pipet->fmod = what_cmd(matrix[0]);
-	execve(pipet->fmod, matrix, pipet->env);
+	if (pipet->fmod == NULL)
+	{
+		write(2, "Error\nCommand doesn't exists.\n", 31);
+		pipet->result = 127;
+		exit(127);
+	}
+	else
+		execve(pipet->fmod, matrix, pipet->env);
 }
 
 void	pipex(t_pipex *pipet)
@@ -47,20 +80,16 @@ void	pipex(t_pipex *pipet)
 
 	if (pipe(fd) == -1)
 	{
-		printf("deu ruim");
+		pipet->result = 1;
+		write(2, "System error\n", 14);
 		exit(2);
 	}
-	// write(2, "1. Tudo ok\n", 12);
 	pid = fork();
 	if (pid == 0)
 		first_cmd(pipet, fd);
-	// write(2, "2. Tudo ok\n", 12);
 	close(fd[1]);
-	pid = fork();
-	if (pid == 0)
-		second_cmd(pipet, fd);
-	// write(2, "3. Tudo ok\n", 12);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, WNOHANG);
+	second_cmd(pipet, fd);
 	close(fd[0]);
 }
 
@@ -71,6 +100,7 @@ static void	init_struct(t_pipex *pipet, char **argv, char **env)
 	pipet->scmd = argv[3];
 	pipet->output = argv[4];
 	pipet->env = env;
+	pipet->result = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -80,9 +110,14 @@ int	main(int argc, char **argv, char **env)
 	init_struct(&pipet, argv, env);
 	if (argc != 5)
 	{
-		printf("Error\nInvalid number of arguments.\n");
+		write(2, "Error\nInvalid number of arguments.\n", 36);
 		exit(1);
 	}
+	pipet.infile = open(pipet.input, O_RDONLY, 0777);
+	if (pipet.infile < 0)
+	{
+		pipet.result = 1;
+	}
 	pipex(&pipet);
-	return (0);
+	return (pipet.result);
 }
