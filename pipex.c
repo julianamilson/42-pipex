@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/11 20:09:04 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:01:43 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
+		matrix[i] = no_quotes(matrix[i]);
 		i++;
 	}
 	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 01411);
@@ -31,17 +32,10 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);
 	if (pipet->result == 1)
-	{
-		write(2, "This file doesn't exists.\n", 27);
-		exit(1);
-	}
+		msg(pipet->output, ": No such file or directory\n", 1);
 	pipet->smod = what_cmd(matrix[0]);
 	if (pipet->smod == NULL)
-	{
-		write(2, "Error\nCommand doesn't exists.\n", 31);
-		pipet->result = 127;
-		exit(127);
-	}
+		msg(matrix[0], ": command not found\n", 127);
 	else
 		execve(pipet->smod, matrix, pipet->env);
 }
@@ -49,26 +43,25 @@ void	second_cmd(t_pipex *pipet, int *fd)
 void	first_cmd(t_pipex *pipet, int *fd)
 {
 	char	**matrix;
+	int		i;
 
 	treating_cmd(pipet->fcmd);
 	matrix = ft_split(pipet->fcmd, ' ');
-	original_cmd(pipet->fcmd);
-	if (pipet->infile < 0)
+	i = 1;
+	while (matrix[i])
 	{
-		pipet->result = 1;
-		write(2, "This file doesn't exists.\n", 27);
-		exit(5);
+		original_cmd(matrix[i]);
+		matrix[i] = no_quotes(matrix[i]);
+		i++;
 	}
+	if (pipet->infile < 0)
+		msg(pipet->input, ": No such file or directory\n", 1);
 	dup2(pipet->infile, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	pipet->fmod = what_cmd(matrix[0]);
 	if (pipet->fmod == NULL)
-	{
-		write(2, "Error\nCommand doesn't exists.\n", 31);
-		pipet->result = 127;
-		exit(127);
-	}
+		msg(matrix[0], ": command not found\n", 127);
 	else
 		execve(pipet->fmod, matrix, pipet->env);
 }
@@ -111,13 +104,9 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 5)
 	{
 		write(2, "Error\nInvalid number of arguments.\n", 36);
-		exit(1);
+		exit(0);
 	}
 	pipet.infile = open(pipet.input, O_RDONLY, 0777);
-	if (pipet.infile < 0)
-	{
-		pipet.result = 1;
-	}
 	pipex(&pipet);
 	return (pipet.result);
 }

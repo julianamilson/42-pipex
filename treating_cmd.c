@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/11 20:17:08 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:39:41 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,33 @@ char	*original_cmd(char *cmd)
 					cmd[i] = ' ';
 				i++;
 			}
+		}
+		i++;
+	}
+	return (cmd);
+}
+
+char	*no_quotes(char *cmd)
+{
+	int	i;
+	int j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'')
+		{
+			i++;
+			str = ft_calloc((ft_strlen(cmd) - 2), sizeof(char));
+			while (cmd[i] != '\0' && cmd[i] != '\'')
+			{
+				str[j] = cmd[i];
+				j++;
+				i++;
+			}
+			return (str);
 		}
 		i++;
 	}

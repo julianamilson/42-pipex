@@ -6,7 +6,7 @@
 #    By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/13 15:52:21 by jmilson-          #+#    #+#              #
-#    Updated: 2022/01/10 16:17:03 by jmilson-         ###   ########.fr        #
+#    Updated: 2022/01/11 20:59:21 by jmilson-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 
 CC = gcc
 
-SRC = treating_cmd.c pipex_utils.c pipex_utils_2.c pipex_utils_3.c
+SRC = treating_cmd.c pipex_utils.c pipex_utils_2.c pipex_utils_3.c messages.c
 
 INCLUDES = -I ./
 
