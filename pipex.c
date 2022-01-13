@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/12 16:28:55 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:43:46 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);
 	if (pipet->result == 1)
-		msg(pipet->output, ": No such file or directory\n", 1);
+		msg(pipet->output, ": No such file or directory\n", 1, matrix);
 	pipet->smod = what_cmd(matrix[0]);
 	if (pipet->smod == NULL)
-		msg(matrix[0], ": command not found\n", 127);
+		msg(matrix[0], ": command not found\n", 127, matrix);
 	else
 		execve(pipet->smod, matrix, pipet->env);
 }
@@ -55,13 +55,13 @@ void	first_cmd(t_pipex *pipet, int *fd)
 		i++;
 	}
 	if (pipet->infile < 0)
-		msg(pipet->input, ": No such file or directory\n", 1);
+		msg(pipet->input, ": No such file or directory\n", 1, matrix);
 	dup2(pipet->infile, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	pipet->fmod = what_cmd(matrix[0]);
 	if (pipet->fmod == NULL)
-		msg(matrix[0], ": command not found\n", 127);
+		msg(matrix[0], ": command not found\n", 127, matrix);
 	else
 		execve(pipet->fmod, matrix, pipet->env);
 }

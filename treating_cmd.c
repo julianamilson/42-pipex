@@ -6,26 +6,45 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/12 15:39:41 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 11:08:33 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free (matrix);
+}
+
 char	*what_cmd(char *cmd)
 {
 	char	**pathways;
 	char	*path_cmd;
+	int		i;
 
 	pathways = ft_split(PATH, ':');
-	while (*pathways != NULL)
+	i = 0;
+	while (pathways[i])
 	{
-		path_cmd = ft_strjoin(*pathways, cmd);
+		path_cmd = ft_strjoin(pathways[i], cmd);
 		if (access(path_cmd, F_OK) == 0)
+		{
+			free_matrix(pathways);
 			return (path_cmd);
+		}
 		free(path_cmd);
-		pathways++;
+		i++;
 	}
+	free_matrix(pathways);
 	return (NULL);
 }
 
@@ -75,9 +94,9 @@ char	*original_cmd(char *cmd)
 
 char	*no_quotes(char *cmd)
 {
-	int	i;
-	int j;
 	char	*str;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
