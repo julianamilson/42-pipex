@@ -6,24 +6,11 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 11:08:33 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 18:20:45 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free (matrix);
-}
 
 char	*what_cmd(char *cmd)
 {
@@ -37,14 +24,11 @@ char	*what_cmd(char *cmd)
 	{
 		path_cmd = ft_strjoin(pathways[i], cmd);
 		if (access(path_cmd, F_OK) == 0)
-		{
-			free_matrix(pathways);
 			return (path_cmd);
-		}
 		free(path_cmd);
 		i++;
 	}
-	free_matrix(pathways);
+	free(pathways);
 	return (NULL);
 }
 
@@ -92,7 +76,7 @@ char	*original_cmd(char *cmd)
 	return (cmd);
 }
 
-char	*no_quotes(char *cmd)
+char	*no_quotes(char *cmd, char *is_tr)
 {
 	char	*str;
 	int		i;
@@ -100,18 +84,17 @@ char	*no_quotes(char *cmd)
 
 	i = 0;
 	j = 0;
+	if (ft_strnstr(is_tr, "tr", ft_strlen(is_tr)))
+		if (cmd[0] == '\'' && cmd[1] == '\'' && cmd[2] == '\'')
+			return ("\'");
 	while (cmd[i])
 	{
 		if (cmd[i] == '\'')
 		{
 			i++;
-			str = ft_calloc((ft_strlen(cmd) - 2), sizeof(char));
+			str = ft_calloc((ft_strlen(cmd) - 1), sizeof(char));
 			while (cmd[i] != '\0' && cmd[i] != '\'')
-			{
-				str[j] = cmd[i];
-				j++;
-				i++;
-			}
+				str[j++] = cmd[i++];
 			return (str);
 		}
 		i++;

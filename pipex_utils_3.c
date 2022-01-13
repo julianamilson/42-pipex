@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 13:32:27 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/05 13:33:06 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 12:25:31 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,28 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	else
 		sub = ft_calloc(1, 1);
 	return (sub);
+}
+
+char	*ft_strnstr(const char	*big, const char *little, size_t len)
+{
+	size_t	lilsize;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	lilsize = ft_strlen(little);
+	if (lilsize == 0)
+		return ((char *)big);
+	while (i < len && big[i] != '\0')
+	{
+		j = 0;
+		while (big[i + j] == little[j]
+			&& little[j] != '\0'
+			&& i + j < len)
+			j++;
+		if (little[j] == '\0')
+			return ((char *)&big[i]);
+		i++;
+	}
+	return (NULL);
 }

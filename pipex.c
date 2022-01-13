@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/12 16:43:46 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 17:44:00 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		matrix[i] = no_quotes(matrix[i]);
+		matrix[i] = no_quotes(matrix[i], matrix[0]);
 		i++;
 	}
 	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
+	check_dup_sec(fd[0], STDIN_FILENO, matrix);
+	check_dup_sec(outfile, STDOUT_FILENO, matrix);
 	close(fd[1]);
 	if (pipet->result == 1)
 		msg(pipet->output, ": No such file or directory\n", 1, matrix);
@@ -48,16 +48,17 @@ void	first_cmd(t_pipex *pipet, int *fd)
 	treating_cmd(pipet->fcmd);
 	matrix = ft_split(pipet->fcmd, ' ');
 	i = 1;
+	if (pipet->infile < 0)
+		msg(pipet->input,
+			": No such file or directory OR permission denied.\n", 1, matrix);
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		matrix[i] = no_quotes(matrix[i]);
+		matrix[i] = no_quotes(matrix[i], matrix[0]);
 		i++;
 	}
-	if (pipet->infile < 0)
-		msg(pipet->input, ": No such file or directory\n", 1, matrix);
-	dup2(pipet->infile, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
+	check_dup(pipet->infile, STDIN_FILENO);
+	check_dup(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	pipet->fmod = what_cmd(matrix[0]);
 	if (pipet->fmod == NULL)
@@ -106,7 +107,7 @@ int	main(int argc, char **argv, char **env)
 		write(2, "Error\nInvalid number of arguments.\n", 36);
 		exit(0);
 	}
-	pipet.infile = open(pipet.input, O_RDONLY, 0777);
+	pipet.infile = open(pipet.input, O_RDONLY);
 	pipex(&pipet);
 	return (pipet.result);
 }
