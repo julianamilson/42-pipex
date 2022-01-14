@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:11:46 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 21:35:56 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:09:49 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	pipex(t_pipex *pipet);
 char	*original_cmd(char *cmd);
 char	*treating_cmd(char *cmd);
 void	msg(char *cmd, char *message, int n, char **matrix);
-char	*no_quotes(char *cmd, char *is_tr);
+// char	*no_quotes(char *cmd, char *is_tr);
+char	*no_quotes(char *cmd);
 void	free_matrix(char **matrix);
 void	check_dup(int a, int b);
 void	check_dup_sec(int a, int b, char **matrix);

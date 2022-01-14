@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 23:01:14 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:11:37 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		matrix[i] = no_quotes(matrix[i], matrix[0]);
+		// matrix[i] = no_quotes(matrix[i], matrix[0]);
+		matrix[i] = no_quotes(matrix[i]);
 		i++;
 	}
 	outfile = open(pipet->output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -55,7 +56,8 @@ void	first_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		matrix[i] = no_quotes(matrix[i], matrix[0]);
+		// matrix[i] = no_quotes(matrix[i], matrix[0]);
+		matrix[i] = no_quotes(matrix[i]);
 		i++;
 	}
 	check_dup(pipet->infile, STDIN_FILENO);

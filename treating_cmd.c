@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 23:14:19 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:55:58 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*original_cmd(char *cmd)
 	return (cmd);
 }
 
-char	*no_quotes(char *cmd, char *is_tr)
+char	*no_quotes(char *cmd)
 {
 	char	*str;
 	int		i;
@@ -86,20 +86,45 @@ char	*no_quotes(char *cmd, char *is_tr)
 
 	i = 0;
 	j = 0;
-	if (ft_strnstr(is_tr, "tr", ft_strlen(is_tr)))
-		if (cmd[0] == '\'' && cmd[1] == '\'' && cmd[2] == '\'')
-			return ("\'");
+	int len = ft_strlen(cmd) - 1;
+	// if (ft_strnstr(is_tr, "tr", len))
+	// 	if (cmd[0] == '\'' && cmd[1] == '\'' && cmd[2] == '\'')
+	// 		return ("\'");
+	// o pronlema é o '' ' agora
 	while (cmd[i])
 	{
 		if (cmd[i] == '\'')
 		{
 			i++;
-			str = ft_calloc((ft_strlen(cmd) - 1), sizeof(char));
-			while (cmd[i] != '\0' && cmd[i] != '\'')
+			str = ft_calloc(len, sizeof(char));
+			while (i < len)
+			{
 				str[j++] = cmd[i++];
+			}
 			return (str);
 		}
 		i++;
 	}
 	return (cmd);
 }
+
+// char	*no_quotes(char *cmd)
+// {
+// 	char	*str;
+// 	int		i;
+// 	int		j;
+
+// 	while (cmd[i])
+// 	{
+// 		if (cmd[i] == '\'')
+// 		{
+// 			i++;
+// 			str = ft_calloc((ft_strlen(cmd) - 1), sizeof(char));
+// 			while (cmd[i] != '\0' && cmd[i] != '\'')
+// 				str[j++] = cmd[i++];
+// 			return (str);
+// 		}
+// 		i++;
+// 	}
+// 	return (cmd);
+// }
