@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 17:44:00 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 23:01:14 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ void	first_cmd(t_pipex *pipet, int *fd)
 
 	treating_cmd(pipet->fcmd);
 	matrix = ft_split(pipet->fcmd, ' ');
-	i = 1;
+	pipet->infile = open(pipet->input, O_RDONLY);
 	if (pipet->infile < 0)
 		msg(pipet->input,
 			": No such file or directory OR permission denied.\n", 1, matrix);
+	i = 1;
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
@@ -75,8 +76,8 @@ void	pipex(t_pipex *pipet)
 	if (pipe(fd) == -1)
 	{
 		pipet->result = 1;
-		write(2, "System error\n", 14);
-		exit(2);
+		write(2, "Process error\n", 15);
+		exit(1);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -107,7 +108,6 @@ int	main(int argc, char **argv, char **env)
 		write(2, "Error\nInvalid number of arguments.\n", 36);
 		exit(0);
 	}
-	pipet.infile = open(pipet.input, O_RDONLY);
 	pipex(&pipet);
 	return (pipet.result);
 }

@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 18:20:45 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 23:14:19 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ char	*treating_cmd(char *cmd)
 char	*original_cmd(char *cmd)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (cmd[i])
+	j = ft_strlen(cmd);
+	while (i < j)
 	{
 		if (cmd[i] == '\'')
 		{

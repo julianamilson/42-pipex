@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:11:46 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 15:31:56 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 21:35:56 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strnstr(const char	*big, const char *little, size_t len);
+char	*ft_strdup(const char *str);
 
 #endif

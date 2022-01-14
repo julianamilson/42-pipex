@@ -6,13 +6,13 @@
 #    By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/13 15:52:21 by jmilson-          #+#    #+#              #
-#    Updated: 2022/01/11 20:59:21 by jmilson-         ###   ########.fr        #
+#    Updated: 2022/01/13 22:27:27 by jmilson-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror -std=c11 -ggdb3
 
 CC = gcc
 

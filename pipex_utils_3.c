@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 13:32:27 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/13 12:25:31 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/13 22:24:19 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = slen - start;
 	if (slen >= start)
 	{
-		sub = (char *)ft_calloc(len + 1, sizeof(char));
+		sub = ft_calloc(len + 1, sizeof(char));
 		if (sub == NULL)
 			return (NULL);
 		ft_strlcpy(sub, &s[start], len + 1);
@@ -66,4 +66,24 @@ char	*ft_strnstr(const char	*big, const char *little, size_t len)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*ft_strdup(const char *str)
+{
+	char	*ptr;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(str) + 1;
+	ptr = (char *)ft_calloc(len, 1);
+	if (ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }
