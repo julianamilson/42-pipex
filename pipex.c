@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:00:15 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/14 11:11:37 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:25:04 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	second_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		// matrix[i] = no_quotes(matrix[i], matrix[0]);
 		matrix[i] = no_quotes(matrix[i]);
 		i++;
 	}
@@ -56,7 +55,6 @@ void	first_cmd(t_pipex *pipet, int *fd)
 	while (matrix[i])
 	{
 		original_cmd(matrix[i]);
-		// matrix[i] = no_quotes(matrix[i], matrix[0]);
 		matrix[i] = no_quotes(matrix[i]);
 		i++;
 	}

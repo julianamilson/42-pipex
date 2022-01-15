@@ -6,7 +6,7 @@
 /*   By: jmilson- <jmilson-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:01:17 by jmilson-          #+#    #+#             */
-/*   Updated: 2022/01/14 11:55:58 by jmilson-         ###   ########.fr       */
+/*   Updated: 2022/01/14 14:28:01 by jmilson-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,11 @@ char	*no_quotes(char *cmd)
 	char	*str;
 	int		i;
 	int		j;
+	int		len;
 
 	i = 0;
 	j = 0;
-	int len = ft_strlen(cmd) - 1;
-	// if (ft_strnstr(is_tr, "tr", len))
-	// 	if (cmd[0] == '\'' && cmd[1] == '\'' && cmd[2] == '\'')
-	// 		return ("\'");
-	// o pronlema é o '' ' agora
+	len = ft_strlen(cmd) - 1;
 	while (cmd[i])
 	{
 		if (cmd[i] == '\'')
@@ -107,24 +104,3 @@ char	*no_quotes(char *cmd)
 	}
 	return (cmd);
 }
-
-// char	*no_quotes(char *cmd)
-// {
-// 	char	*str;
-// 	int		i;
-// 	int		j;
-
-// 	while (cmd[i])
-// 	{
-// 		if (cmd[i] == '\'')
-// 		{
-// 			i++;
-// 			str = ft_calloc((ft_strlen(cmd) - 1), sizeof(char));
-// 			while (cmd[i] != '\0' && cmd[i] != '\'')
-// 				str[j++] = cmd[i++];
-// 			return (str);
-// 		}
-// 		i++;
-// 	}
-// 	return (cmd);
-// }
